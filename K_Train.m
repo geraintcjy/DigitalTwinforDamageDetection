@@ -1,0 +1,36 @@
+layers = [
+    imageInputLayer([6 52 1])
+    convolution2dLayer([1 1], 16, 'Padding','same')
+    batchNormalizationLayer
+    reluLayer
+    convolution2dLayer([1 1], 32, 'Padding','same')
+    batchNormalizationLayer
+    reluLayer
+    convolution2dLayer([1 1], 64, 'Padding','same')
+    batchNormalizationLayer
+    reluLayer
+    convolution2dLayer([1 1], 64, 'Padding','same')
+    batchNormalizationLayer
+    reluLayer
+    fullyConnectedLayer(3)
+    regressionLayer];
+
+miniBatchSize  = 1;
+validationFrequency = floor(numel(K_tf_value)/miniBatchSize);
+options = trainingOptions('adam', ...
+    'MiniBatchSize',miniBatchSize, ...
+    'MaxEpochs',20, ...
+    'InitialLearnRate',1e-3, ...
+    'LearnRateSchedule','piecewise', ...
+    'LearnRateDropFactor',0.6, ...
+    'LearnRateDropPeriod',1, ...
+    'Shuffle','every-epoch', ...
+    'ValidationData',{K_tf_validation, K_tf_value_validation}, ...
+    'ValidationFrequency',validationFrequency, ...
+    'Plots','training-progress', ...
+    'Verbose',false);
+
+net = trainNetwork(K_tf, K_tf_value, layers, options);
+
+YPredicted = predict(net, K_tf_test);
+disp([K_tf_value_test, YPredicted]);
