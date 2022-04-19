@@ -32,7 +32,7 @@ C_TRAIN; % C classification
 K_TRAIN; % K regression
 ```
 
-Each command is for a unique training process of the digital twin prediction. Read my paper for more details.
+Each command is for a unique training process of the digital twin prediction. ~~Read my paper for more details.~~ My paper is being revised for publication. I'll upload it as soon as I can. Thanks! XD
 
 ## Contact Me
 
